@@ -1,0 +1,72 @@
+# This is the "Bouncer's Rulebook" (OpenAPI 2.0 Spec)
+swagger: '2.0'
+info:
+  title: 'Digital Doppelganger Gateway'
+  version: '1.0.0'
+schemes:
+  - 'https'
+produces:
+  - 'application/json'
+consumes:
+  - 'application/json'
+
+paths:
+  '/find-twin':
+    # --- OPERATION 1: The POST request ---
+    post:
+      operationId: find_twin
+      summary: 'Finds a demographic doppelganger'
+      
+      # --- Backend configuration for Cloud Run service ---
+      # The address points to the Cloud Run service endpoint
+      # Authentication to Cloud Run is handled via IAM roles
+      # Ensure the API Gateway service account has permission to invoke the Cloud Run service
+      # deadline: 120 seconds (matches Cloud Run service timeout)
+      # This allows the backend enough time to fetch Census data and call Gemini AI
+      x-google-backend:
+        address: https://doppelganger-engine-5znouwfmaa-uc.a.run.app/find-twin
+        deadline: 120
+      # --------------------------------------------------
+      
+      # We require an API key for this operation
+      security:
+        - api_key_definition: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              zip_code:
+                type: string
+      responses:
+        '200': { description: 'Successful lookup' }
+        '404': { description: 'ZIP code not found' }
+        '500': { description: 'Internal server error' }
+        
+    # --- OPERATION 2: The OPTIONS (CORS) request ---
+    options:
+      operationId: cors_preflight_find_twin
+      summary: 'Handles CORS preflight requests'
+      
+      # --- Backend configuration for CORS preflight requests ---
+      # Points to the same Cloud Run service endpoint
+      # Authentication to Cloud Run is handled via IAM roles
+      x-google-backend:
+        address: https://doppelganger-engine-5znouwfmaa-uc.a.run.app/find-twin
+      # --------------------------------------------------
+
+      # NOTE: No security requirement for OPTIONS requests
+      # CORS preflight requests are sent automatically by browsers
+      # and do not include authentication headers
+      # The actual POST request will still require an API key
+      responses:
+        '204': { description: 'CORS preflight response (handled by backend)' }
+        '500': { description: 'CORS preflight error' }
+
+# This defines the API Key "lock"
+securityDefinitions:
+  api_key_definition:
+    type: 'apiKey'
+    name: 'x-api-key'
+    in: 'header'
