@@ -9,7 +9,7 @@
 OpenAPI 2.0 (Swagger) specification for the **Digital Doppelganger** API Gateway. This specification defines the API Gateway configuration, routes, authentication, and backend service integration.
 
 > **Part of the Demographic Doppelgänger Project**  
-> 🌐 [Live Application](https://demographic-doppelganger-71027948544.us-west1.run.app/) | [Frontend Repository](https://github.com/ChrisMahlke/doppelganger) | [Backend Engine](https://github.com/ChrisMahlke/doppelganger-engine)
+> Live Application DISABLED | [Frontend Repository](https://github.com/ChrisMahlke/doppelganger) | [Backend Engine](https://github.com/ChrisMahlke/doppelganger-engine)
 
 ## Overview
 
@@ -235,7 +235,7 @@ api-gateway-spec/
 
 This specification is part of the **Demographic Doppelgänger** project:
 
-- 🌐 **Live Application**: [https://demographic-doppelganger-71027948544.us-west1.run.app/](https://demographic-doppelganger-71027948544.us-west1.run.app/)
+- 🌐 **Live Application**: DISABLED
 - 🎨 **Frontend Repository**: [doppelganger](https://github.com/ChrisMahlke/doppelganger) - React/TypeScript frontend
 - 🐍 **Backend Engine**: [doppelganger-engine](https://github.com/ChrisMahlke/doppelganger-engine) - Python Flask service
 - 🔧 **Node.js API** (Deprecated): [doppelganger-api](https://github.com/ChrisMahlke/doppelganger-api) - Legacy Node.js gateway service
